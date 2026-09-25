@@ -3,8 +3,6 @@ import { usePathname } from 'next/navigation'
 import { useHand } from '@/store/handStore'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import ToastHost from '@/components/ui/Toast'
 
 interface NavItem { path: string; icon: React.ReactNode; label: string; badge?: boolean }
 
@@ -92,20 +90,7 @@ export default function SidebarLayout({ children }: { children: React.ReactNode 
           <div className="text-[7px] font-mono text-gray-300 dark:text-[#333333]">v1.1</div>
         </div>
       </aside>
-      <main className="ml-[52px] w-[calc(100%-52px)] h-screen overflow-auto bg-[#f8fafc] dark:bg-[#0a0a0a]">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={pathname}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.18, ease: [0.25, 0.1, 0.25, 1] }}
-          >
-            {children}
-          </motion.div>
-        </AnimatePresence>
-      </main>
-      <ToastHost />
+      <main className="ml-[52px] w-[calc(100%-52px)] h-screen overflow-auto bg-[#f8fafc] dark:bg-[#0a0a0a]">{children}</main>
     </>
   )
 }
