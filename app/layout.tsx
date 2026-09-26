@@ -1,6 +1,7 @@
 import './globals.css'
 import { JetBrains_Mono } from 'next/font/google'
 import SidebarLayout from '@/components/SidebarLayout'
+import HealthKeepalive from '@/components/HealthKeepalive'
 
 const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' })
 
@@ -14,6 +15,7 @@ export default function L({ children }: { children: React.ReactNode }) {
     <html lang="en" className={mono.variable}>
       <head><script dangerouslySetInnerHTML={{ __html: THEME_INIT }} /></head>
       <body>
+        <HealthKeepalive />
         <SidebarLayout>{children}</SidebarLayout>
       </body>
     </html>
