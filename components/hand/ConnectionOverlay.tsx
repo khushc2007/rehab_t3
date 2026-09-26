@@ -12,9 +12,11 @@ export default function ConnectionOverlay(){
  const [t,col]:[string,string]=sim?['SIM','#0F6E5E']
   :status==='connecting'?['CONNECTING…','#f5a623']
   :status==='reconnecting'?['RECONNECTING…','#f5a623']
+  :status==='offline'?['OFFLINE','#d9534f']
   :!c?['IDLE','#444']
   :stale?['STALE','#f5a623']
   :['LIVE','#2ea853']
+ const hzCol=hz>10?'#2ea853':hz>0?'#f5a623':'#d9534f'
  return <div className="absolute top-4 left-4 flex items-center gap-2 font-mono text-[9pt]" style={{color:col}}>
   <span className={`w-1.5 h-1.5 rounded-full ${live&&!stale?'animate-pulse':''}`} style={{background:col}}/>{t}
- {!sim&&c&&<span className="text-[8pt]" style={{color:hz<5?'#f5a623':'#333'}}>{hz}Hz</span>}</div>}
+ {!sim&&c&&<span className="text-[8pt]" style={{color:hzCol}}>{hz}Hz</span>}</div>}

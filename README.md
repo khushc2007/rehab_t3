@@ -1,6 +1,7 @@
 # RehabGrip — Live Session
 **Local:** `npm i && npm run dev` → http://localhost:3000. With no `NEXT_PUBLIC_WS_URL` it starts in SIM mode (auto-cycling hand, no backend).
-**Live:** copy `.env.local.example` to `.env.local`, set `NEXT_PUBLIC_WS_URL`, restart. The app then connects (backoff 1s→30s, 10 tries). Frame: `{t,f:[idx,mid,ring,pinky,thumb],e,ax,ay,az,gx,gy,gz,bat}`, gyro in °/s, sensor Y-up. Press `R` to zero yaw (no magnetometer, yaw drifts).
+**Live:** copy `.env.local.example` to `.env.local`, set `NEXT_PUBLIC_WS_URL` (currently the deployed Render relay, `wss://rehab-t3-render.onrender.com/ws`), restart. Click "Connect to Device" on `/session` — it does not auto-connect on load. The socket connects on demand (backoff 1s→30s, 10 tries, then OFFLINE) and pings the relay every 25s to keep Render's free tier awake. Messages from the relay are typed: `sensor_data`/`sensor_data_cached` carry `{deviceId,timestamp,flex:[idx,mid,ring,pinky,thumb],emg:{value},imu:{ax,ay,az,gx,gy,gz},battery}` (flex angles pre-calibrated in degrees, gyro in °/s, sensor Y-up), and `device_status` carries `{status:'online'|'offline'|'stale'}`. Press `R` to zero yaw (no magnetometer, yaw drifts).
+**Deploying to Vercel:** set `NEXT_PUBLIC_WS_URL` under Settings → Environment Variables too — `.env.local` is not read at build/runtime on Vercel.
 **Simulation:** click the near-invisible ⌥ at bottom-left. Toggle SIM MODE, drag sliders, pick presets, AUTO CYCLE, NOISE + ADD NOISE. SPEED = smoothing factor per 60fps frame (default .11).
 **Rep rules:** rep = mean of 4 fingers >15° then <10°; correct peak 65–85°, partial 30–65° or >85°, missed <30°.
 **Vercel:** push to Git, import in Vercel, add `NEXT_PUBLIC_WS_URL` (use `wss://`), deploy.
